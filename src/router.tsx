@@ -31,6 +31,8 @@ export const router = createBrowserRouter(
         { path: "auth/register", lazy: () => import("./pages/auth-register") },
         { path: "auth/forgot-password", lazy: () => import("./pages/auth-forgot-password") },
         { path: "auth/reset-password", lazy: () => import("./pages/auth-reset-password") },
+        // 跨站登录交接（生图站等本站其它域名用它拿论坛身份，见该页注释）
+        { path: "auth/authorize", lazy: () => import("./pages/auth-authorize") },
         { path: "me", lazy: () => import("./pages/me") },
         { path: "u", lazy: () => import("./pages/user") },
         { path: "admin", lazy: () => import("./pages/admin") },

@@ -39,6 +39,7 @@ export const STATIC_ROUTE_META: Record<string, RouteMeta> = {
   "/auth/register": { title: "注册账号", description: "注册二叉树树论坛账号。", noindex: true },
   "/auth/forgot-password": { title: "找回密码", description: "找回论坛账号密码。", noindex: true },
   "/auth/reset-password": { title: "重置密码", description: "重置论坛账号密码。", noindex: true },
+  "/auth/authorize": { title: "授权登录", description: "把论坛身份授权给站内其它域名。", noindex: true },
   "/me": { title: "个人中心", description: "论坛个人中心。", noindex: true },
   "/u": { title: "用户主页", description: "论坛用户主页。", noindex: true },
   "/admin": { title: "论坛管理", description: "论坛管理面板。", noindex: true },
