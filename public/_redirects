@@ -1,0 +1,9 @@
+# SPA 回退：任何未命中静态文件的路径都交给 index.html，由浏览器里的路由决定画什么。
+# 少了这条，直接访问 /post/19 或刷新页面就是托管商的 404 —— 首页能开、深链全挂，
+# 是纯 CSR 部署最典型的翻车方式。
+#
+# 这份文件是 Cloudflare Pages / Netlify 的格式。其它平台见 README：
+#   nginx    → try_files $uri /index.html;
+#   Caddy    → try_files {path} /index.html
+#   EdgeOne  → 站点设置里的「SPA 回退 / 错误页重定向到 /index.html（200）」
+/*    /index.html   200

@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+# 登录态页面没有可索引内容，别浪费抓取预算
+Disallow: /me
+Disallow: /admin
+Disallow: /auth/
+
+# 由 scripts/build-feeds.mjs 在构建期生成（内容随构建冻结，发新帖需重新构建）
+Sitemap: https://bbs.acofork.com/sitemap.xml
