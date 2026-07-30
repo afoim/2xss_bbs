@@ -1,6 +1,6 @@
 # af_forum-frontend —— 二叉树树论坛（独立前端，纯 CSR）
 
-从主站 `af_frontend`（`2x.nz`，React Router 7 全站 SSR）里**整块搬出来**的论坛前端，
+从主站 `af_frontend`（`2x.nz`，React Router 7 服务端全站 SSR）里**整块搬出来**的论坛前端，
 改写为**纯客户端渲染的单页应用**，只含论坛路由，可以独立部署到一个子域名上。
 
 - 技术栈：Vite + React 19 + React Router 8（`createBrowserRouter`，库模式）+ Tailwind v4
