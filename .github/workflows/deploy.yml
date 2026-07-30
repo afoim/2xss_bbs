@@ -57,7 +57,14 @@ jobs:
       - name: 检查产物
         run: |
           test -f dist/index.html || { echo "产物异常：没有 index.html"; exit 1; }
-          test -f dist/_redirects || echo "提示：没有 _redirects（CF Workers 用 wrangler.jsonc 的 SPA 回退，可忽略）"
+          # CF Workers 静态资源会解析 _redirects，而 SPA 那条 `/* /index.html 200`
+          # 会被它判成自环、**让部署整个失败**（Infinite loop detected in this rule）。
+          # 这里的 SPA 回退由 wrangler.jsonc 的 not_found_handling 提供，产物里不该有这个文件。
+          # 写成 if 而不是 `test -f X && {...}`：后者在文件不存在时整条 AND-list 返回 1，
+          # 而 Actions 的 run 跑在 `bash -e` 下，会把「检查通过」当成步骤失败
+          if [ -f dist/_redirects ]; then
+            echo "产物里有 _redirects，CF Workers 会拒绝部署"; exit 1
+          fi
           echo "文件数: $(find dist -type f | wc -l)"
 
       - name: 推送产物到 main（dist/ 子目录 + wrangler.jsonc）

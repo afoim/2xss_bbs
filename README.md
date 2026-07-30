@@ -105,7 +105,13 @@ npm run typecheck
 `index.html`（状态码 200）。少了它，直接访问 `/post/19` 或按 F5 就是托管商的 404 ——
 首页能开、深链全挂，是这类站最典型的翻车方式。
 
-- **Cloudflare Pages / Netlify**：`public/_redirects` 已经写好，直接用
+- **Cloudflare Workers 静态资源（本项目实际用的）**：靠 `wrangler.jsonc` 里的
+  `"not_found_handling": "single-page-application"`，**不要再放 `_redirects`**。
+  Workers 侧的 `_redirects` 解析器会把 `/* /index.html 200` 判成自环并**直接让部署失败**：
+  `Invalid _redirects configuration: Infinite loop detected in this rule`。
+  （它认为跳到 `/index.html` 会被规范化回 `/`，于是再次命中同一条规则。）
+  这条规则只对 Pages / Netlify 合法，两边同名文件语义不同，别互相照抄。
+- **Cloudflare Pages / Netlify**：加一个 `public/_redirects`，内容一行 `/*  /index.html  200`
 - **nginx**：`location / { try_files $uri /index.html; }`
 - **Caddy**：`try_files {path} /index.html`
 - **EdgeOne / 其它 CDN**：找「SPA 回退 / 404 重写到 /index.html（200）」那个开关
