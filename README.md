@@ -73,16 +73,24 @@ CORS 不需要任何配置：后端对所有接口回 `Access-Control-Allow-Orig
 ## 二、跑起来
 
 ```bash
-npm install
-npm run dev        # http://127.0.0.1:5173
-npm run build      # → dist/
-npm run preview    # 本地验产物
-npm run typecheck
+pnpm install
+pnpm dev           # http://127.0.0.1:5173
+pnpm build         # → dist/
+pnpm preview       # 本地验产物
+pnpm typecheck
 ```
+
+用 pnpm（workflow 里是 `pnpm install --frozen-lockfile`，混用会让 lockfile 打架）。
+pnpm 10 默认不执行依赖的构建脚本，`package.json` 里的 `pnpm.onlyBuiltDependencies`
+放行了 esbuild —— **删掉它 CI 会以 `ERR_PNPM_IGNORED_BUILDS` 退出 1**。
 
 `dev` / `build` 都会先跑 `scripts/build-icon-subset.mjs`：它扫源码里出现的图标名，
 从 `@iconify-json/*` 抽出一份离线子集（`src/lib/icons/subset.json`，已 gitignore）。
 **不要改成运行时向 Iconify API 拉图标** —— 那正是当初图标全空的原因。
+
+`build` 串的是 图标子集 → `tsc --noEmit` → `vite build` → `scripts/build-feeds.mjs`。
+类型错误会在中间被拦下；最后那步要访问 `https://i.2x.nz` 生成 rss/sitemap，
+它失败只打警告、不中断构建。
 
 ### 环境变量（`.env`，全部会被打进前端产物，不要放密钥）
 
