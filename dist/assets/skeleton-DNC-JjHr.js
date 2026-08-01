@@ -1,0 +1,1 @@
+import{j as s}from"./vendor-react-Cer2vCJ3.js";import{c as o}from"./index-BwPZMo96.js";function n({className:e,...t}){return s.jsx("div",{"data-slot":"skeleton","aria-hidden":"true",className:o("shell-skeleton",e),...t})}export{n as S};

@@ -1,0 +1,27 @@
+{
+  // ⚠ Worker 脚本名不允许下划线，只能小写字母、数字、连字符。
+  // 仓库叫 2xss_bbs，Worker 只能叫 2xss-bbs —— 名字对不上是正常的，别去"修"。
+  // 改了 name 就是发布到**另一个 Worker**；没有 routes 时 wrangler 不接管路由，
+  // 结果是部署成功但域名仍指向旧 Worker，且不报错。
+  "name": "2xss-bbs",
+  "compatibility_date": "2026-07-31",
+  "account_id": "879bb5589ed7931a25942359acc50154",
+  "assets": {
+    "directory": "./dist",
+
+    // 与主站的 URL 规范形态一致：无尾斜杠（/post/19 而不是 /post/19/）。
+    // OAuth 回跳带的那个尾斜杠会被 301 掉，浏览器会把 #token= 原样带到新地址。
+    "html_handling": "drop-trailing-slash",
+
+    // **必须是 single-page-application，不能照抄 2xss_hub 的 404-page**：
+    // 这是个客户端路由的 SPA，/post/19、/auth/login 在磁盘上没有对应文件。
+    // 404-page 会让直接刷新深链接变成真 404，只有从首页点进去才行 —— 而那正是
+    // 「硬刷新能开、点站内链接却 404」的镜像症状，很难查。
+    // single-page-application 对未命中的路径回 index.html + 200，交给
+    // createBrowserRouter 接管。
+    "not_found_handling": "single-page-application"
+  },
+  "observability": {
+    "enabled": true
+  }
+}

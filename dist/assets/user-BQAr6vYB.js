@@ -1,0 +1,1 @@
+import{j as e}from"./vendor-react-Cer2vCJ3.js";import{u as o}from"./index-BwPZMo96.js";function r(){return e.jsxs("main",{className:"container mx-auto px-4 py-8",children:[e.jsx("h1",{className:"text-2xl font-bold mb-4",children:"用户主页"}),e.jsx("p",{className:"text-muted-foreground",children:"开发中..."})]})}function s(){return o(),e.jsx(r,{})}export{s as Component};
